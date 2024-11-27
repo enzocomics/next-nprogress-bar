@@ -5,22 +5,22 @@ import Router from 'next/router';
 import { ProgressBarProps } from '.';
 
 export const PagesProgressBar = React.memo(
-  ({
-    color = '#0A2FFF',
-    height = '2px',
-    options,
-    shallowRouting = false,
-    disableSameURL = true,
-    startPosition = 0,
-    delay = 0,
-    stopDelay = 0,
-    style,
-    nonce,
-  }: Omit<ProgressBarProps, 'targetPreprocessor' | 'disableAnchorClick'>) => {
-    const styles = (
-      <style nonce={nonce}>
-        {style ||
-          `
+	({
+		color = '#0A2FFF',
+		height = '2px',
+		options,
+		shallowRouting = false,
+		disableSameURL = true,
+		startPosition = 0,
+		delay = 0,
+		stopDelay = 0,
+		style,
+		nonce,
+	}: Omit<ProgressBarProps, 'targetPreprocessor' | 'disableAnchorClick'>) => {
+		const styles = (
+			<style nonce={nonce}>
+				{style ||
+					`
           #nprogress {
             pointer-events: none;
           }
@@ -94,81 +94,81 @@ export const PagesProgressBar = React.memo(
             100% { transform: rotate(360deg); }
           }
         `}
-      </style>
-    );
+			</style>
+		);
 
-    NProgress.configure(options || {});
+		NProgress.configure(options || {});
 
-    useEffect(() => {
-      let timer: NodeJS.Timeout;
+		useEffect(() => {
+			let timer: NodeJS.Timeout;
 
-      const startProgress = () => {
-        timer = setTimeout(() => {
-          if (startPosition > 0) NProgress.set(startPosition);
-          NProgress.start();
-        }, delay);
-      };
+			const startProgress = () => {
+				timer = setTimeout(() => {
+					if (startPosition > 0) NProgress.set(startPosition);
+					NProgress.start();
+				}, delay);
+			};
 
-      const stopProgress = () => {
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => {
-          if (!NProgress.isStarted()) return;
-          NProgress.done(true);
-        }, stopDelay);
-      };
+			const stopProgress = () => {
+				if (timer) clearTimeout(timer);
+				timer = setTimeout(() => {
+					if (!NProgress.isStarted()) return;
+					NProgress.done(true);
+				}, stopDelay);
+			};
 
-      const handleRouteStart = (url: string) => {
-        const targetUrl = new URL(url, location.href);
-        const currentUrl = new URL(Router.route, location.href);
+			const handleRouteStart = (url: string) => {
+				const targetUrl = new URL(url, location.href);
+				const currentUrl = new URL(Router.route, location.href);
 
-        if (
-          (!shallowRouting ||
-            (isSameURL(targetUrl, currentUrl) && !disableSameURL) ||
-            !isSameURL(targetUrl, currentUrl)) &&
-          !NProgress.isStarted()
-        ) {
-          startProgress();
-        }
-      };
-      const handleRouteDone = () => stopProgress();
+				if (
+					(!shallowRouting ||
+						(isSameURL(targetUrl, currentUrl) && !disableSameURL) ||
+						!isSameURL(targetUrl, currentUrl)) &&
+					!NProgress.isStarted()
+				) {
+					startProgress();
+				}
+			};
+			const handleRouteDone = () => stopProgress();
 
-      Router.events.on('routeChangeStart', handleRouteStart);
-      Router.events.on('routeChangeComplete', handleRouteDone);
-      Router.events.on('routeChangeError', handleRouteDone);
+			Router.events.on('routeChangeStart', handleRouteStart);
+			Router.events.on('routeChangeComplete', handleRouteDone);
+			Router.events.on('routeChangeError', handleRouteDone);
 
-      return () => {
-        // Make sure to remove the event handler on unmount!
-        Router.events.off('routeChangeStart', handleRouteStart);
-        Router.events.off('routeChangeComplete', handleRouteDone);
-        Router.events.off('routeChangeError', handleRouteDone);
-      };
-    }, []);
+			return () => {
+				// Make sure to remove the event handler on unmount!
+				Router.events.off('routeChangeStart', handleRouteStart);
+				Router.events.off('routeChangeComplete', handleRouteDone);
+				Router.events.off('routeChangeError', handleRouteDone);
+			};
+		}, []);
 
-    return styles;
-  },
-  (prevProps, nextProps) => {
-    if (nextProps?.memo === false) {
-      return false;
-    }
+		return null;
+	},
+	(prevProps, nextProps) => {
+		if (nextProps?.memo === false) {
+			return false;
+		}
 
-    if (!nextProps?.shouldCompareComplexProps) {
-      return true;
-    }
+		if (!nextProps?.shouldCompareComplexProps) {
+			return true;
+		}
 
-    return (
-      prevProps?.color === nextProps?.color &&
-      prevProps?.height === nextProps?.height &&
-      prevProps?.shallowRouting === nextProps?.shallowRouting &&
-      prevProps?.startPosition === nextProps?.startPosition &&
-      prevProps?.delay === nextProps?.delay &&
-      prevProps?.disableSameURL === nextProps?.disableSameURL &&
-      prevProps?.stopDelay === nextProps?.stopDelay &&
-      prevProps?.nonce === nextProps?.nonce &&
-      JSON.stringify(prevProps?.options) ===
-        JSON.stringify(nextProps?.options) &&
-      prevProps?.style === nextProps?.style
-    );
-  },
+		return (
+			prevProps?.color === nextProps?.color &&
+			prevProps?.height === nextProps?.height &&
+			prevProps?.shallowRouting === nextProps?.shallowRouting &&
+			prevProps?.startPosition === nextProps?.startPosition &&
+			prevProps?.delay === nextProps?.delay &&
+			prevProps?.disableSameURL === nextProps?.disableSameURL &&
+			prevProps?.stopDelay === nextProps?.stopDelay &&
+			prevProps?.nonce === nextProps?.nonce &&
+			JSON.stringify(prevProps?.options) ===
+			JSON.stringify(nextProps?.options) &&
+			prevProps?.style === nextProps?.style
+		);
+	},
 );
 
 PagesProgressBar.displayName = 'PagesProgressBar';

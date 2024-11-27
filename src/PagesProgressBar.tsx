@@ -144,7 +144,7 @@ export const PagesProgressBar = React.memo(
 			};
 		}, []);
 
-		return null;
+		return styles;
 	},
 	(prevProps, nextProps) => {
 		if (nextProps?.memo === false) {

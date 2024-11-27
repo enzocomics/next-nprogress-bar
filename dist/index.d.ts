@@ -37,7 +37,7 @@ export interface ProgressBarProps {
     startPosition?: number;
     delay?: number;
     stopDelay?: number;
-    style?: string;
+    style?: string | null;
     nonce?: string;
     memo?: boolean;
     shouldCompareComplexProps?: boolean;

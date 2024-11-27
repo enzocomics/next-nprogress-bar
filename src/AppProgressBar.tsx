@@ -36,7 +36,7 @@ export const AppProgressBar = React.memo(
 		targetPreprocessor,
 		disableAnchorClick = false,
 	}: ProgressBarProps) => {
-		const styles = (
+		const styles = style == null ? null : (
 			<style nonce={nonce}>
 				{style ||
 					`
@@ -112,7 +112,7 @@ export const AppProgressBar = React.memo(
             0%   { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
           }
-        ` || null}
+        `}
 			</style>
 		);
 

@@ -1,22 +1,22 @@
 import { start, done } from 'nprogress';
 import {
-  AppProgressBar as AppProgressBarComponent,
-  useRouter,
+	AppProgressBar as AppProgressBarComponent,
+	useRouter,
 } from './AppProgressBar';
 import withSuspense from './WithSuspense';
 
 export interface NProgressOptions {
-  minimum?: number;
-  template?: string;
-  easing?: string;
-  speed?: number;
-  trickle?: boolean;
-  trickleSpeed?: number;
-  showSpinner?: boolean;
-  parent?: string;
-  positionUsing?: string;
-  barSelector?: string;
-  spinnerSelector?: string;
+	minimum?: number;
+	template?: string;
+	easing?: string;
+	speed?: number;
+	trickle?: boolean;
+	trickleSpeed?: number;
+	showSpinner?: boolean;
+	parent?: string;
+	positionUsing?: string;
+	barSelector?: string;
+	spinnerSelector?: string;
 }
 
 /**
@@ -35,34 +35,34 @@ export interface NProgressOptions {
  * @param disableSameURL Disable triggering progress bar on the same URL - @default true
  */
 export interface ProgressBarProps {
-  color?: string;
-  height?: string;
-  options?: Partial<NProgressOptions>;
-  shallowRouting?: boolean;
-  disableSameURL?: boolean;
-  startPosition?: number;
-  delay?: number;
-  stopDelay?: number;
-  style?: string;
-  nonce?: string;
-  memo?: boolean;
-  shouldCompareComplexProps?: boolean;
-  targetPreprocessor?: (url: URL) => URL;
-  disableAnchorClick?: boolean;
+	color?: string;
+	height?: string;
+	options?: Partial<NProgressOptions>;
+	shallowRouting?: boolean;
+	disableSameURL?: boolean;
+	startPosition?: number;
+	delay?: number;
+	stopDelay?: number;
+	style?: string | null;
+	nonce?: string;
+	memo?: boolean;
+	shouldCompareComplexProps?: boolean;
+	targetPreprocessor?: (url: URL) => URL;
+	disableAnchorClick?: boolean;
 }
 
 export interface RouterNProgressOptions {
-  showProgressBar?: boolean;
-  startPosition?: number;
-  disableSameURL?: boolean;
+	showProgressBar?: boolean;
+	startPosition?: number;
+	disableSameURL?: boolean;
 }
 
 export const startProgress = () => {
-  start();
+	start();
 };
 
 export const stopProgress = (force?: boolean) => {
-  done(force);
+	done(force);
 };
 
 const AppProgressBar = withSuspense<ProgressBarProps>(AppProgressBarComponent);
